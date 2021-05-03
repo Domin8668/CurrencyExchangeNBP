@@ -10,9 +10,9 @@ import time
 def list_functions():
     label_header = Label(frame, text="Dostępne funkcje:", font=('Arial', 15, 'bold'))
     label_header.grid(row=0,
-                     column=0,
-                     columnspan=3,
-                     sticky="w")
+                      column=0,
+                      columnspan=3,
+                      sticky="w")
 
     button_1 = Button(frame, text="Kursy walut", width=15, command=lambda: load_from_file(data, FILES[0], directory))
     button_1.grid(row=1, column=0, sticky="w")
@@ -47,7 +47,7 @@ def list_functions():
 
 # optimised
 def load_from_file(data, filename, directory):
-    for widget in frame.winfo_children(): # clears all widgets inside frame
+    for widget in frame.winfo_children():  # clears all widgets inside frame
         widget.destroy()
     loaded_data = []
     with open(directory + '/' + filename, 'r') as file:
@@ -106,7 +106,7 @@ def data_sort(data, key, bool_reverse_element, filename):
     elif key == 3:
         sort_by = 'rate'
         reverse_list[key] = not reverse_list[key]
-    elif key == 4:
+    else:
         sort_by = 'change'
         reverse_list[key] = not reverse_list[key]
 
@@ -119,105 +119,105 @@ def data_sort(data, key, bool_reverse_element, filename):
 
 # optimised
 def show_table(sorted_loaded_data, file):
-    for widget in table_frame.winfo_children(): # clears all widgets inside table_frame
+    for widget in table_frame.winfo_children():  # clears all widgets inside table_frame
         widget.destroy()
 
     global reverse_list
     button_code = Button(frame,
-                   width=5,
-                   fg='black',
-                   text='Kod',
-                   font=('Arial', 10, 'bold'),
-                   command=lambda: data_sort(sorted_loaded_data, 0, reverse_list[0], filename))
+                         width=5,
+                         fg='black',
+                         text='Kod',
+                         font=('Arial', 10, 'bold'),
+                         command=lambda: data_sort(sorted_loaded_data, 0, reverse_list[0], filename))
     button_code.grid(row=0, column=0, sticky="w")
 
     button_name = Button(frame,
-                   width=35,
-                   fg='black',
-                   text='Nazwa',
-                   font=('Arial', 10, 'bold'),
-                   command=lambda: data_sort(sorted_loaded_data, 1, reverse_list[1], filename))
+                         width=35,
+                         fg='black',
+                         text='Nazwa',
+                         font=('Arial', 10, 'bold'),
+                         command=lambda: data_sort(sorted_loaded_data, 1, reverse_list[1], filename))
     button_name.grid(row=0, column=1, sticky="w")
 
     button_new_rate = Button(frame,
-                   width=12,
-                   fg='black',
-                   text='Obecny kurs',
-                   font=('Arial', 10, 'bold'),
-                   command=lambda: data_sort(sorted_loaded_data, 2, reverse_list[2], filename))
+                             width=12,
+                             fg='black',
+                             text='Obecny kurs',
+                             font=('Arial', 10, 'bold'),
+                             command=lambda: data_sort(sorted_loaded_data, 2, reverse_list[2], filename))
     button_new_rate.grid(row=0, column=2, sticky="w")
 
     button_rate = Button(frame,
-                   width=10,
-                   fg='black',
-                   text='Stary kurs*',
-                   font=('Arial', 10, 'bold'),
-                   command=lambda: data_sort(sorted_loaded_data, 3, reverse_list[3], filename))
+                         width=10,
+                         fg='black',
+                         text='Stary kurs*',
+                         font=('Arial', 10, 'bold'),
+                         command=lambda: data_sort(sorted_loaded_data, 3, reverse_list[3], filename))
     button_rate.grid(row=0, column=3, sticky="w")
 
     button_change = Button(frame,
-                   width=10,
-                   fg='black',
-                   text='Zmiana',
-                   font=('Arial', 10, 'bold'),
-                   command=lambda: data_sort(sorted_loaded_data, 4, reverse_list[4], filename))
+                           width=10,
+                           fg='black',
+                           text='Zmiana',
+                           font=('Arial', 10, 'bold'),
+                           command=lambda: data_sort(sorted_loaded_data, 4, reverse_list[4], filename))
     button_change.grid(row=0, column=4, sticky="w")
 
     for i in range(len(sorted_loaded_data)):
         label_code = Label(table_frame,
-                       width=5,
-                       fg='blue',
-                       text=sorted_loaded_data[i]['code'],
-                       anchor="w",
-                       font=('Arial', 10, 'bold'))
+                           width=5,
+                           fg='blue',
+                           text=sorted_loaded_data[i]['code'],
+                           anchor="w",
+                           font=('Arial', 10, 'bold'))
         label_code.grid(row=i, column=0, sticky="w")
 
         label_name = Label(table_frame,
-                       width=35,
-                       fg='blue',
-                       text=sorted_loaded_data[i]['name'],
-                       anchor="w",
-                       font=('Arial', 10, 'bold'))
+                           width=35,
+                           fg='blue',
+                           text=sorted_loaded_data[i]['name'],
+                           anchor="w",
+                           font=('Arial', 10, 'bold'))
         label_name.grid(row=i, column=1, sticky="w")
 
         label_new_rate = Label(table_frame,
-                       width=12,
-                       fg='blue',
-                       text=sorted_loaded_data[i]['new_rate'],
-                       anchor="w",
-                       font=('Arial', 10, 'bold'))
+                               width=12,
+                               fg='blue',
+                               text=sorted_loaded_data[i]['new_rate'],
+                               anchor="w",
+                               font=('Arial', 10, 'bold'))
         label_new_rate.grid(row=i, column=2, sticky="w")
 
         label_rate = Label(table_frame,
-                       width=10,
-                       fg='blue',
-                       text=sorted_loaded_data[i]['rate'],
-                       anchor="w",
-                       font=('Arial', 10, 'bold'))
+                           width=10,
+                           fg='blue',
+                           text=sorted_loaded_data[i]['rate'],
+                           anchor="w",
+                           font=('Arial', 10, 'bold'))
         label_rate.grid(row=i, column=3, sticky="w")
 
         label_change = Label(table_frame,
-                   width=10,
-                   fg='blue',
-                   text=str(sorted_loaded_data[i]['change']) + '%',
-                   anchor="w",
-                   font=('Arial', 10, 'bold'))
+                             width=10,
+                             fg='blue',
+                             text=str(sorted_loaded_data[i]['change']) + '%',
+                             anchor="w",
+                             font=('Arial', 10, 'bold'))
         label_change.grid(row=i, column=4, sticky="w")
 
     label_info = Label(table_frame,
                        fg='grey',
                        text=('*dane porównawcze z: '
-                            + file[9:11]
-                            + ':'
-                            + file[11:13]
-                            + ':'
-                            + file[13:15]
-                            + ' '
-                            + file[6:8]
-                            + '/'
-                            + file[4:6]
-                            + '/'
-                            + file[:4]),
+                             + file[9:11]
+                             + ':'
+                             + file[11:13]
+                             + ':'
+                             + file[13:15]
+                             + ' '
+                             + file[6:8]
+                             + '/'
+                             + file[4:6]
+                             + '/'
+                             + file[:4]),
                        anchor="w",
                        font=('Arial', 8, 'bold'))
     label_info.grid(row=len(sorted_loaded_data)+1, column=0, columnspan=5, sticky="w")
@@ -226,9 +226,9 @@ def show_table(sorted_loaded_data, file):
 # optimised
 def compare_from_file(data):
     window.title("Plik")
-    for widget in frame.winfo_children(): # clears all widgets inside frame
+    for widget in frame.winfo_children():  # clears all widgets inside frame
         widget.destroy()
-    for widget in table_frame.winfo_children(): # clears all widgets inside table_frame
+    for widget in table_frame.winfo_children():  # clears all widgets inside table_frame
         widget.destroy()
 
     if not FILES:
@@ -250,9 +250,9 @@ def compare_from_file(data):
 
 def converter_menu(data):
     window.title("Opcje")
-    for widget in frame.winfo_children(): # clears all widgets inside frame
+    for widget in frame.winfo_children():  # clears all widgets inside frame
         widget.destroy()
-    for widget in table_frame.winfo_children(): # clears all widgets inside table_frame
+    for widget in table_frame.winfo_children():  # clears all widgets inside table_frame
         widget.destroy()
 
     variable = StringVar(frame)
@@ -266,7 +266,7 @@ def converter_menu(data):
 
 
 def show_converter(data, currency_code, bool_swap):
-    for widget in frame.winfo_children(): # clears all widgets inside frame
+    for widget in frame.winfo_children():  # clears all widgets inside frame
         widget.destroy()
 
     for currency in data:
@@ -281,7 +281,7 @@ def show_converter(data, currency_code, bool_swap):
     else:
         entry_currency = Entry(frame, width=10)
         label_currency = Label(frame, text=" PLN")
-        label_result = Label(frame, text=" "  + currency_code)
+        label_result = Label(frame, text=" " + currency_code)
 
     entry_currency.grid(row=0, column=0, sticky="w")
     label_currency.grid(row=0, column=1, sticky="w")
@@ -313,7 +313,7 @@ def convert_swap(data,
                  mode,
                  bool_swap,
                  label_result):
-    for widget in table_frame.winfo_children(): # clears all widgets inside table_frame
+    for widget in table_frame.winfo_children():  # clears all widgets inside table_frame
         widget.destroy()
 
     if mode == "Konwertuj \N{RIGHTWARDS BLACK ARROW}":
@@ -322,33 +322,35 @@ def convert_swap(data,
         except ValueError:
             error_label = Label(table_frame, text="Błąd. Podaj prawidłową liczbę.")
             error_label.grid(row=1,
-                            column=0,
-                            columnspan=3,
-                            sticky="w")
+                             column=0,
+                             columnspan=3,
+                             sticky="w")
             entry_currency.delete(0, END)
         else:
             if currency_input < 0.01 and not bool_swap:
                 error_label = Label(table_frame, text="Błąd. Podaj liczbę wiekszą niż 0.01.")
                 error_label.grid(row=1,
-                                column=0,
-                                columnspan=3,
-                                sticky="w")
+                                 column=0,
+                                 columnspan=3,
+                                 sticky="w")
                 entry_currency.delete(0, END)
         
             elif currency_input / currency_rate < 0.01 and bool_swap:
-                error_label = Label(table_frame, text="Błąd. Podaj liczbą większą niż " + str(round(max(100 * currency_rate), 0.01), 4) + '.')
+                error_label = Label(table_frame, text="Błąd. Podaj liczbą większą niż "
+                                    + str(round(max(100 * currency_rate, 0.01), 3)) + '.')
                 error_label.grid(row=1,
-                                column=0,
-                                columnspan=3,
-                                sticky="w")
+                                 column=0,
+                                 columnspan=3,
+                                 sticky="w")
                 entry_currency.delete(0, END)
 
             elif currency_input * currency_rate < 0.01 and not bool_swap:
-                error_label = Label(table_frame, text="Błąd. Podaj liczbę większą niż " + str(round(max(0.01 / currency_rate), 0.01), 4) + '.')
+                error_label = Label(table_frame, text="Błąd. Podaj liczbę większą niż "
+                                    + str(round(max(0.01 / currency_rate, 0.01), 3)) + '.')
                 error_label.grid(row=1,
-                                column=0,
-                                columnspan=3,
-                                sticky="w")
+                                 column=0,
+                                 columnspan=3,
+                                 sticky="w")
                 entry_currency.delete(0, END)
             else:
                 if not bool_swap:
@@ -369,9 +371,9 @@ def convert_swap(data,
 
 # optimised
 def save_to_file(data):
-    for widget in frame.winfo_children(): # clears all widgets inside frame
+    for widget in frame.winfo_children():  # clears all widgets inside frame
         widget.destroy()
-    for widget in table_frame.winfo_children(): # clears all widgets inside table_frame
+    for widget in table_frame.winfo_children():  # clears all widgets inside table_frame
         widget.destroy()
 
     now = datetime.now()
@@ -406,27 +408,27 @@ def list_credits():
 
     author_label = Label(frame, text="Autor: ", font=('Arial', 15, 'bold'))
     author_label.grid(row=0,
-                    column=0,
-                    pady=5,
-                    rowspan=2,
-                    sticky="w")
+                      column=0,
+                      pady=5,
+                      rowspan=2,
+                      sticky="w")
     author_link_label = Label(frame,
                               text="Dominik Sigulski",
                               font=('Arial', 15, 'bold'),
                               cursor="hand2")
     author_link_label.grid(row=0,
-                    column=1,
-                    pady=5,
-                    rowspan=2,
-                    sticky="w")
+                           column=1,
+                           pady=5,
+                           rowspan=2,
+                           sticky="w")
     author_link_label.bind("<Button-1>", lambda a: callback("https://github.com/Domin8668/"))
 
     header_label = Label(frame, text="Zbudowane dzięki:", font=('Arial', 10, 'bold'))
     header_label.grid(row=2,
-                    column=0,
-                    columnspan=2,
-                    pady=3,
-                    sticky="w")
+                      column=0,
+                      columnspan=2,
+                      pady=3,
+                      sticky="w")
 
     link1 = Label(frame,
                   text="stackoverflow.com",
