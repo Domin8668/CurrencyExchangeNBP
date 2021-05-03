@@ -375,7 +375,7 @@ def save_to_file(data):
         widget.destroy()
 
     now = datetime.now()
-    file = now.strftime('%Y%m%d_%H%M%S')
+    file = now.strftime('%Y-%m-%d_%H-%M-%S')
     with open(directory + '/' + file + '.txt', 'w') as file:
         for i in range(len(data)):
             row = ''
