@@ -5,6 +5,7 @@ import webbrowser
 from datetime import datetime
 import time
 
+
 # optimised
 def list_functions():
     label_header = Label(frame, text="Dostępne funkcje:", font=('Arial', 15, 'bold'))
@@ -33,15 +34,16 @@ def list_functions():
     label_4 = Label(frame, text=" - porównanie aktualnych kursów z tymi z wybranego pliku")
     label_4.grid(row=4, column=1, sticky="w")
 
-    button_5 = Button(frame, text="Informacje", width=15, command=lambda: sort_table(data))
+    button_5 = Button(frame, text="Informacje", width=15, command=lambda: list_credits())
     button_5.grid(row=5, column=0, sticky="w")
     label_5 = Label(frame, text=" - informacje dotyczące programu")
     label_5.grid(row=5, column=1, sticky="w")
 
-    button_6 = Button(frame, text="Wyjście", width=15, command=lambda: sort_table(data))
+    button_6 = Button(frame, text="Wyjście", width=15, command=window.quit)
     button_6.grid(row=6, column=0, sticky="w")
     label_6 = Label(frame, text=" - zakończenie działania programu")
     label_6.grid(row=6, column=1, sticky="w")
+
 
 # optimised
 def load_from_file(data, filename, directory):
@@ -66,12 +68,14 @@ def load_from_file(data, filename, directory):
 
     add_diff(data, loaded_data, filename)
 
+
 # optimised
 def add_diff(sorted_data, loaded_data, filename):
     for i in range(len(sorted_data)):
         loaded_data[i]["new_rate"] = data[i]["rate"]
         loaded_data[i]["change"] = round(get_change(sorted_data[i]['rate'], loaded_data[i]['rate']), 2)
     show_table(loaded_data, filename)
+
 
 # optimised
 def get_change(current, previous):
@@ -85,31 +89,33 @@ def get_change(current, previous):
             return float(-result)
     except ZeroDivisionError:
         return float('inf')
-    
+
+
 # optimised
 def data_sort(data, key, bool_reverse_element, filename):
     global reverse_list
     if key == 0:
-        sortBy = 'code'
+        sort_by = 'code'
         reverse_list[key] = not reverse_list[key]
     elif key == 1:
-        sortBy = 'name'
+        sort_by = 'name'
         reverse_list[key] = not reverse_list[key]
     elif key == 2:
-        sortBy = 'new_rate'
+        sort_by = 'new_rate'
         reverse_list[key] = not reverse_list[key]
     elif key == 3:
-        sortBy = 'rate'
+        sort_by = 'rate'
         reverse_list[key] = not reverse_list[key]
     elif key == 4:
-        sortBy = 'change'
+        sort_by = 'change'
         reverse_list[key] = not reverse_list[key]
 
-    if sortBy == 'name':
-        sorted_data = sorted(data, key=lambda a: a[sortBy].lower(), reverse=bool_reverse_element)
+    if sort_by == 'name':
+        sorted_data = sorted(data, key=lambda a: a[sort_by].lower(), reverse=bool_reverse_element)
     else:
-        sorted_data = sorted(data, key=lambda a: a[sortBy], reverse=bool_reverse_element)
+        sorted_data = sorted(data, key=lambda a: a[sort_by], reverse=bool_reverse_element)
     show_table(sorted_data, filename)
+
 
 # optimised
 def show_table(sorted_loaded_data, file):
@@ -216,6 +222,7 @@ def show_table(sorted_loaded_data, file):
                        font=('Arial', 8, 'bold'))
     label_info.grid(row=len(sorted_loaded_data)+1, column=0, columnspan=5, sticky="w")
 
+
 # optimised
 def compare_from_file(data):
     window.title("Plik")
@@ -240,6 +247,7 @@ def compare_from_file(data):
         button = Button(frame, text="OK", command=lambda: load_from_file(data, variable.get(), directory))
         button.grid(row=0, column=1, sticky="w")
 
+
 def converter_menu(data):
     window.title("Opcje")
     for widget in frame.winfo_children(): # clears all widgets inside frame
@@ -253,8 +261,9 @@ def converter_menu(data):
     w.config(width=37)
     w.grid(row=0, column=0, sticky="w")
 
-    button = Button(frame, text="OK", command=lambda: show_converter(data, variable.get()[:3], False))
-    button.grid(row=0, column=1, sticky="w")
+    button = Button(frame, text="OK", command=lambda: show_converter(data, variable.get()[:3], False), width=3)
+    button.grid(row=0, column=1, sticky="W")
+
 
 def show_converter(data, currency_code, bool_swap):
     for widget in frame.winfo_children(): # clears all widgets inside frame
@@ -262,7 +271,7 @@ def show_converter(data, currency_code, bool_swap):
 
     for currency in data:
         if currency['code'] == currency_code:
-            currency_rate = (currency['rate'])
+            currency_rate = currency['rate']
             break
 
     if not bool_swap:
@@ -289,18 +298,13 @@ def show_converter(data, currency_code, bool_swap):
 
     button = Button(frame,
                     text="OK",
-                    command=lambda: convert_swap(data,
-                                                 entry_currency,
-                                                 currency_rate,
-                                                 currency_code,
-                                                 variable.get(),
-                                                 bool_swap,
-                                                 label_result))
-    button.grid(row=0,
-                column=3,
-                width=15,
-                sticky="w")
+                    command=lambda: convert_swap(data, entry_currency,
+                                                 currency_rate, currency_code,
+                                                 variable.get(), bool_swap,
+                                                 label_result), width=3)
+    button.grid(row=0, column=3, sticky="w")
     label_result.grid(row=0, column=4, sticky="w")
+
 
 def convert_swap(data,
                  entry_currency,
@@ -323,7 +327,7 @@ def convert_swap(data,
                             sticky="w")
             entry_currency.delete(0, END)
         else:
-            if currency_input < 0.01 and bool_swap == False:
+            if currency_input < 0.01 and not bool_swap:
                 error_label = Label(table_frame, text="Błąd. Podaj liczbę wiekszą niż 0.01.")
                 error_label.grid(row=1,
                                 column=0,
@@ -331,7 +335,7 @@ def convert_swap(data,
                                 sticky="w")
                 entry_currency.delete(0, END)
         
-            elif currency_input / currency_rate < 0.01 and bool_swap == True:
+            elif currency_input / currency_rate < 0.01 and bool_swap:
                 error_label = Label(table_frame, text="Błąd. Podaj liczbą większą niż " + str(round(max(100 * currency_rate), 0.01), 4) + '.')
                 error_label.grid(row=1,
                                 column=0,
@@ -339,7 +343,7 @@ def convert_swap(data,
                                 sticky="w")
                 entry_currency.delete(0, END)
 
-            elif currency_input * currency_rate < 0.01 and bool_swap == False:
+            elif currency_input * currency_rate < 0.01 and not bool_swap:
                 error_label = Label(table_frame, text="Błąd. Podaj liczbę większą niż " + str(round(max(0.01 / currency_rate), 0.01), 4) + '.')
                 error_label.grid(row=1,
                                 column=0,
@@ -352,7 +356,7 @@ def convert_swap(data,
                     temp_string = " PLN"
                 else:
                     result = currency_input / currency_rate
-                    temp_string = " "  + currency_code
+                    temp_string = " " + currency_code
                 label_result['text'] = format(result, '.2f') + temp_string
     
     elif mode == "Zmień walutę \N{LEFT RIGHT DOUBLE ARROW}":
@@ -361,6 +365,7 @@ def convert_swap(data,
         bool_swap = not bool_swap
         entry_currency.delete(0, END)
         show_converter(data, currency_code, bool_swap)
+
 
 # optimised
 def save_to_file(data):
@@ -385,17 +390,18 @@ def save_to_file(data):
     confirmation_label = Label(frame, text="Zapisano do pliku.")
     confirmation_label.grid(row=0, column=0, sticky="w")
 
-    #global FILES
+    # global FILES
     FILES.clear()
     for filename in os.listdir(directory):
         if filename.endswith(".txt"):
             FILES.append(filename)
 
+
 # optimised
 def list_credits():
-    for widget in frame.winfo_children(): # clears all widgets inside frame
+    for widget in frame.winfo_children():  # clears all widgets inside frame
         widget.destroy()
-    for widget in table_frame.winfo_children(): # clears all widgets inside table_frame
+    for widget in table_frame.winfo_children():  # clears all widgets inside table_frame
         widget.destroy()
 
     author_label = Label(frame, text="Autor: ", font=('Arial', 15, 'bold'))
@@ -520,9 +526,11 @@ def list_credits():
                sticky="w")
     link7.bind("<Button-1>", lambda a: callback("https://www.python.org/"))
 
+
 # optimised
 def callback(url):
     webbrowser.open_new(url)
+
 
 # scraper scraping data from https://www.nbp.pl/home.aspx?f=/kursy/kursya.html
 data = scraper.nbp_scraper()
